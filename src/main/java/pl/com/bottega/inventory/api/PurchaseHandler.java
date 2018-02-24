@@ -23,32 +23,54 @@ public class PurchaseHandler implements Handler<PurchaseCommand, PurchaseDto> {
     @Override
     @Transactional
     public PurchaseDto handle(PurchaseCommand cmd) {
-        Validatable.ValidationErrors errors = new Validatable.ValidationErrors();
         Map<String, Integer> successMap = new HashMap<>();
         Map<String, Integer> failMap = new HashMap<>();
 
-        for (Map.Entry<String, Integer> entry : cmd.getSkus().entrySet()) {
-            if (alreadyExist(entry.getKey())) {
-                Product productFromRepo = repository.get(entry.getKey());
-                if (productFromRepo.getAmount() < entry.getValue()) {
-                    failMap.put(entry.getKey(), entry.getValue());
-                } else
-                    successMap.put(entry.getKey(), entry.getValue());
-            } else {
-                errors.add(entry.getKey(), "no such sku");
-            }
-        }
-        if (!errors.isValid())
-            throw new InvalidCommandException(errors);
-        if (failMap.isEmpty()) {
-            for (Map.Entry<String, Integer> ent : cmd.getSkus().entrySet()) {
-                Product prodToUpdate = repository.get(ent.getKey());
-                prodToUpdate.takeOffValues(ent.getValue());
-                repository.update(prodToUpdate);
-            }
+        validateStockSkuCodeAvailability(cmd);
+        validateStockAmountAvailability(cmd, successMap, failMap);
+
+        if (allRequestedProductsInStock(cmd, successMap)) {
+            updateAmountsInRepository(cmd);
             return new SuccessPurchaseDto(successMap, true);
         } else
             return new FailPurchaseDto(failMap, false);
+    }
+
+    private boolean allRequestedProductsInStock(PurchaseCommand cmd, Map<String, Integer> successMap) {
+        return cmd.getSkus().size() == successMap.size();
+    }
+
+    private void updateAmountsInRepository(PurchaseCommand cmd) {
+        cmd.getSkus().entrySet().stream().forEach((entry) -> {
+            Product productToUpdate = getProduct(entry.getKey());
+            productToUpdate.reduceTheAmount(entry.getValue());
+            repository.update(productToUpdate);
+        });
+    }
+
+    private void validateStockAmountAvailability(PurchaseCommand cmd, Map<String, Integer> successMap, Map<String, Integer> failMap) {
+        cmd.getSkus().entrySet().stream().forEach((entry) -> {
+            Product productFromRepo = getProduct(entry.getKey());
+            if (productFromRepo.getAmount() < entry.getValue()) {
+                failMap.put(entry.getKey(), entry.getValue());
+            } else
+                successMap.put(entry.getKey(), entry.getValue());
+        });
+    }
+
+    private Product getProduct(String scuCode) {
+        return repository.get(scuCode);
+    }
+
+    private void validateStockSkuCodeAvailability(PurchaseCommand cmd) {
+        Validatable.ValidationErrors errors = new Validatable.ValidationErrors();
+        cmd.getSkus().entrySet().stream().forEach((entry) -> {
+            if (!alreadyExist(entry.getKey())) {
+                errors.add(entry.getKey(), "no such sku");
+            }
+        });
+        if (!errors.isValid())
+            throw new InvalidCommandException(errors);
     }
 
     private boolean alreadyExist(String skuCode) {

@@ -4,13 +4,15 @@ public class AddCommand implements Validatable {
 
     private String skuCode;
     private Integer amount;
+    private Integer ZERO = 0;
+    private Integer THOUSAND = 1000;
 
     @Override
     public void validate(ValidationErrors errors) {
         validatePresenceOf(skuCode, "skuCode", errors);
         validatePresenceOf(amount, "amount", errors);
 
-        if (amount != null && (amount <= 0 || amount >= 1000))
+        if (amount != null && (amount <= ZERO || amount >= THOUSAND))
             errors.add("amount", "must be between 1 and 999");
     }
 

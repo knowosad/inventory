@@ -1,11 +1,8 @@
 package pl.com.bottega.inventory.infrastructure;
 
 import org.springframework.stereotype.Component;
-import pl.com.bottega.inventory.domain.NoProductException;
 import pl.com.bottega.inventory.domain.Product;
 import pl.com.bottega.inventory.domain.ProductRepository;
-import pl.com.bottega.inventory.domain.commands.InvalidCommandException;
-import pl.com.bottega.inventory.domain.commands.Validatable;
 
 import javax.persistence.EntityManager;
 
@@ -31,7 +28,6 @@ public class JpaProductRepository implements ProductRepository {
             return true;
         }
         return false;
-
     }
 
     @Override

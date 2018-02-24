@@ -23,7 +23,7 @@ public class Product {
         this.amount += cmd.getAmount();
     }
 
-    public void takeOffValues(Integer toTakeOffValues){
+    public void reduceTheAmount(Integer toTakeOffValues){
         this.amount -= toTakeOffValues;
     }
 

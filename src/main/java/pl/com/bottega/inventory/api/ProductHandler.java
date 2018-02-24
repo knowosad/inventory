@@ -1,7 +1,7 @@
 package pl.com.bottega.inventory.api;
 
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import pl.com.bottega.inventory.domain.Product;
 import pl.com.bottega.inventory.domain.ProductRepository;
 import pl.com.bottega.inventory.domain.commands.AddCommand;

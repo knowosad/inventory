@@ -1,12 +1,10 @@
 package pl.com.bottega.inventory.ui;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.bottega.inventory.api.CommandGateway;
 import pl.com.bottega.inventory.api.PurchaseDto;
-import pl.com.bottega.inventory.api.SuccessPurchaseDto;
 import pl.com.bottega.inventory.domain.commands.AddCommand;
 import pl.com.bottega.inventory.domain.commands.PurchaseCommand;
 
