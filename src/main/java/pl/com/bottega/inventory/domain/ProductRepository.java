@@ -7,6 +7,4 @@ public interface ProductRepository {
     boolean ifExist(String skuCode);
 
     void save(Product product);
-    void update(Product product);
-
 }

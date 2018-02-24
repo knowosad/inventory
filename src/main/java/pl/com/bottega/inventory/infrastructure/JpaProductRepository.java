@@ -34,9 +34,4 @@ public class JpaProductRepository implements ProductRepository {
     public void save(Product product) {
         entityManager.persist(product);
     }
-
-    @Override
-    public void update(Product product) {
-        entityManager.merge(product);
-    }
 }

@@ -35,7 +35,7 @@ public class ProductHandler implements Handler<AddCommand, Void> {
     private void updateProduct(AddCommand cmd) {
         Product product = repository.get(cmd.getSkuCode());
         product.addValues(cmd);
-        repository.update(product);
+        repository.save(product);
     }
 
     private boolean alreadyExist(AddCommand cmd) {

@@ -44,7 +44,7 @@ public class PurchaseHandler implements Handler<PurchaseCommand, PurchaseDto> {
         cmd.getSkus().entrySet().stream().forEach((entry) -> {
             Product productToUpdate = getProduct(entry.getKey());
             productToUpdate.reduceTheAmount(entry.getValue());
-            repository.update(productToUpdate);
+            repository.save(productToUpdate);
         });
     }
 
