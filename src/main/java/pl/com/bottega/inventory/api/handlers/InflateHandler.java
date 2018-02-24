@@ -1,24 +1,24 @@
-package pl.com.bottega.inventory.api;
+package pl.com.bottega.inventory.api.handlers;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.bottega.inventory.domain.Product;
 import pl.com.bottega.inventory.domain.ProductRepository;
-import pl.com.bottega.inventory.domain.commands.AddCommand;
+import pl.com.bottega.inventory.domain.commands.InflateCommand;
 import pl.com.bottega.inventory.domain.commands.Validatable;
 
 @Component
-public class ProductHandler implements Handler<AddCommand, Void> {
+public class InflateHandler implements Handler<InflateCommand, Void> {
 
     private ProductRepository repository;
 
-    public ProductHandler(ProductRepository repository) {
+    public InflateHandler(ProductRepository repository) {
         this.repository = repository;
     }
 
     @Override
     @Transactional
-    public Void handle(AddCommand cmd) {
+    public Void handle(InflateCommand cmd) {
         if (alreadyExist(cmd)) {
             updateProduct(cmd);
         } else {
@@ -27,23 +27,23 @@ public class ProductHandler implements Handler<AddCommand, Void> {
         return null;
     }
 
-    private void addProduct(AddCommand cmd) {
+    private void addProduct(InflateCommand cmd) {
         Product product = new Product(cmd);
         repository.save(product);
     }
 
-    private void updateProduct(AddCommand cmd) {
+    private void updateProduct(InflateCommand cmd) {
         Product product = repository.get(cmd.getSkuCode());
         product.addValues(cmd);
         repository.save(product);
     }
 
-    private boolean alreadyExist(AddCommand cmd) {
+    private boolean alreadyExist(InflateCommand cmd) {
         return repository.ifExist(cmd.getSkuCode());
     }
 
     @Override
     public Class<? extends Validatable> getSupportedCommandClass() {
-        return AddCommand.class;
+        return InflateCommand.class;
     }
 }

@@ -1,13 +1,13 @@
-package pl.com.bottega.inventory.api;
+package pl.com.bottega.inventory.api.dtos;
 
 import java.util.Map;
 
-public class SuccessPurchaseDto extends PurchaseDto{
+public class TruePurchaseDto extends PurchaseDto{
 
 
     private Map<String, Integer> purchasedProducts;
 
-    public SuccessPurchaseDto(Map<String, Integer> products, boolean success) {
+    public TruePurchaseDto(Map<String, Integer> products, boolean success) {
         super(success);
         this.purchasedProducts = products;
     }

@@ -2,6 +2,7 @@ package pl.com.bottega.inventory.api;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import pl.com.bottega.inventory.api.handlers.Handler;
 import pl.com.bottega.inventory.domain.commands.InvalidCommandException;
 import pl.com.bottega.inventory.domain.commands.Validatable;
 

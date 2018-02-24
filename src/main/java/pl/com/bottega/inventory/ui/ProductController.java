@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.bottega.inventory.api.CommandGateway;
-import pl.com.bottega.inventory.api.PurchaseDto;
-import pl.com.bottega.inventory.domain.commands.AddCommand;
+import pl.com.bottega.inventory.api.dtos.PurchaseDto;
+import pl.com.bottega.inventory.domain.commands.InflateCommand;
 import pl.com.bottega.inventory.domain.commands.PurchaseCommand;
 
 import java.util.Map;
@@ -20,7 +20,7 @@ public class ProductController {
     }
 
     @PostMapping("/inventory")
-    public void addProduct(@RequestBody AddCommand cmd){
+    public void addProduct(@RequestBody InflateCommand cmd){
         gateway.execute(cmd);
     }
 

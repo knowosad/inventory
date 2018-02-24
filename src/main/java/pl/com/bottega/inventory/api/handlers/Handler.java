@@ -1,6 +1,5 @@
-package pl.com.bottega.inventory.api;
+package pl.com.bottega.inventory.api.handlers;
 
-import pl.com.bottega.inventory.domain.commands.AddCommand;
 import pl.com.bottega.inventory.domain.commands.Validatable;
 
 public interface Handler<C extends Validatable, R> {

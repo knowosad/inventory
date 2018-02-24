@@ -1,6 +1,6 @@
 package pl.com.bottega.inventory.domain.commands;
 
-public class AddCommand implements Validatable {
+public class InflateCommand implements Validatable {
 
     private String skuCode;
     private Integer amount;

@@ -1,4 +1,4 @@
-package pl.com.bottega.inventory.api;
+package pl.com.bottega.inventory.api.dtos;
 
 public abstract class PurchaseDto {
 

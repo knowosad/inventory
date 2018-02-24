@@ -1,6 +1,6 @@
 package pl.com.bottega.inventory.domain;
 
-import pl.com.bottega.inventory.domain.commands.AddCommand;
+import pl.com.bottega.inventory.domain.commands.InflateCommand;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,12 +14,12 @@ public class Product {
 
     public Product() {
     }
-    public Product(AddCommand cmd) {
+    public Product(InflateCommand cmd) {
         this.skuCode = cmd.getSkuCode();
         this.amount = cmd.getAmount();
     }
 
-    public void addValues(AddCommand cmd) {
+    public void addValues(InflateCommand cmd) {
         this.amount += cmd.getAmount();
     }
 
